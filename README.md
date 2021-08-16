@@ -4,6 +4,7 @@ The example is generated using the [Camunda Platform Initializr](https://start.c
 
 ## Prerequierements
 
+- git
 - JDK >= 11
 - [maven](https://maven.apache.org) (3.x.x) or use the include [maven-wrapper](https://github.com/takari/maven-wrapper) `mvnw` (keep in mind to replace `mvn` with `mvnw` on command line).
 - IDE supporting java, maven and optionally spring boot (eclipse, intellij idea, visual studio code, spring tool suite, ...)
@@ -11,7 +12,7 @@ The example is generated using the [Camunda Platform Initializr](https://start.c
 
 ## Verify
 
-Verify follow commands will run with success:
+Clone the repository and verify on command line:
 
 ```
 mvn clean package
@@ -22,6 +23,8 @@ mvn spring-boot:run
 ```
 
 Point your browser to http://localhost:8080 and play around (credentials `admin/admin`)
+
+Also verify you can start the application (`java/com/example/workflow/Application.java`) from inside your IDE.
 
 H2 console is enabled and located at http://localhost:8080/h2-console. 
 
