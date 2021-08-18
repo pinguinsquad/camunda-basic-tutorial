@@ -1,5 +1,7 @@
 # camunda tutorial playground spring boot
 
+[![Java CI with Maven](https://github.com/pinguinsquad/camunda-basic-tutorial/actions/workflows/maven.yml/badge.svg)](https://github.com/pinguinsquad/camunda-basic-tutorial/actions/workflows/maven.yml)
+
 The example is generated using the [Camunda Platform Initializr](https://start.camunda.com). It is intended to check your environment for development purposes and to provide a basic example to start from.
 
 ## Prerequierements
