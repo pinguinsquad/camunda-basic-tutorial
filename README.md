@@ -26,7 +26,7 @@ mvn spring-boot:run
 
 Point your browser to http://localhost:8080 and play around (credentials `admin/admin`)
 
-Also verify you can start the application (`java/com/example/workflow/Application.java`) from inside your IDE.
+Also verify you can start the application (`src/main/java/com/example/workflow/Application.java`) from inside your IDE.
 
 H2 console is enabled and located at http://localhost:8080/h2-console. 
 
