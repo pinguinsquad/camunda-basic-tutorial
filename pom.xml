@@ -10,6 +10,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+    <camunda.version>7.15.0</camunda.version>
   </properties>
 
   <dependencyManagement>
@@ -25,7 +26,7 @@
       <dependency>
         <groupId>org.camunda.bpm</groupId>
         <artifactId>camunda-bom</artifactId>
-        <version>7.15.0</version>
+        <version>${camunda.version}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -59,6 +60,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-ui</artifactId>
+      <version>1.5.10</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
     </dependency>
@@ -74,6 +81,12 @@
       <optional>true</optional>
     </dependency>
 
+    <dependency>
+      <groupId>org.camunda.bpm</groupId>
+      <artifactId>camunda-engine-rest-openapi</artifactId>
+      <version>${camunda.version}</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -82,6 +95,34 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>2.4.3</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <?m2e execute onConfiguration,onIncremental?>
+            <id>resource-dependencies</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.camunda.bpm</groupId>
+                  <artifactId>camunda-engine-rest-openapi</artifactId>
+                  <version>${camunda.version}</version>
+                  <type>jar</type>
+                  <overWrite>true</overWrite>
+                </artifactItem>
+              </artifactItems>
+              <includes>openapi.json</includes>
+              <outputDirectory>${project.build.outputDirectory}/public/camunda</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

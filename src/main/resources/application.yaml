@@ -3,3 +3,10 @@ spring.h2.console.enabled: true
 camunda.bpm.admin-user:
   id: admin
   password: admin
+springdoc:
+  swagger-ui:
+    urls:
+      - url: /camunda/openapi.json
+        name: camunda
+      - url: /v3/api-docs
+        name: example

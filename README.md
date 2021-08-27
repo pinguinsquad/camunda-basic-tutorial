@@ -28,6 +28,8 @@ Point your browser to http://localhost:8080 and play around (credentials `admin/
 
 Also verify you can start the application (`src/main/java/com/example/workflow/Application.java`) from inside your IDE.
 
-H2 console is enabled and located at http://localhost:8080/h2-console. 
+H2 console is enabled and located at http://localhost:8080/h2-console.
+
+swagger ui is located at http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config
 
 camunda credentials and jdbc connection parameters are defined in [application.yaml](src/main/resources/application.yaml).
