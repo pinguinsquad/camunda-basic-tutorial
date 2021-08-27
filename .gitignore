@@ -25,10 +25,15 @@ hs_err_pid*
 .idea
 *.iml
 
+# VS Code
+.vscode
+
 target/
 .settings
 .classpath
 .project
+.factorypath
 
 # h2
 camunda-h2-database.*.db
+
