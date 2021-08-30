@@ -33,6 +33,7 @@ target/
 .classpath
 .project
 .factorypath
+.DS_Store
 
 # h2
 camunda-h2-database.*.db
