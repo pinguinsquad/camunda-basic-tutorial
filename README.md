@@ -4,11 +4,11 @@
 
 The example is generated using the [Camunda Platform Initializr](https://start.camunda.com). It is intended to check your environment for development purposes and to provide a basic example to start from.
 
-## Prerequierements
+## Prerequisites
 
 - git
 - JDK >= 11
-- [maven](https://maven.apache.org) (3.x.x) or use the include [maven-wrapper](https://github.com/takari/maven-wrapper) `mvnw` (keep in mind to replace `mvn` with `mvnw` on command line).
+- [maven](https://maven.apache.org) (3.x.x) or use the included [maven-wrapper](https://github.com/takari/maven-wrapper) `mvnw` (keep in mind to replace `mvn` with `mvnw` on command line).
 - IDE supporting java, maven and optionally spring boot (eclipse, intellij idea, visual studio code, spring tool suite, ...)
 - [camunda Modeler](https://camunda.com/de/download/modeler/)
 
