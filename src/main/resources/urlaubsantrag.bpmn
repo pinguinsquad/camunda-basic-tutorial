@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0mbmlms" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:collaboration id="Collaboration_15yr77y">
+    <bpmn:participant id="Participant_00cjnlv" name="bad company" processRef="urlaubsantrag" />
+  </bpmn:collaboration>
+  <bpmn:process id="urlaubsantrag" name="Urlaubsantrag" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0sfqxjr">
+      <bpmn:lane id="Lane_1lt3y5g" name="Mitarbeiter">
+        <bpmn:flowNodeRef>Gateway_1azi7jt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_Korrigieren</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_09n6k7f</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_UrlaubsantragAbgebrochen</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_03m7hes" name="Vorgesetzter">
+        <bpmn:flowNodeRef>Activity_FaktenCheck</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_AntragPruefen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_17hd1pt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1yuje1q</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_19tu7z4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_UrlaubsantragAbgelehnt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_MitarbeiterBenachrichtigenVorgesetzter</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_02casph" name="HR">
+        <bpmn:flowNodeRef>Activity_AntragBuchen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_MitarbeiterBenachrichtigenHR</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_UrlaubsantragGebucht</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:exclusiveGateway id="Gateway_1azi7jt">
+      <bpmn:incoming>Flow_1p0ctr5</bpmn:incoming>
+      <bpmn:incoming>Flow_1blpvv8</bpmn:incoming>
+      <bpmn:outgoing>Flow_0brb57j</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Activity_Korrigieren" name="korrigieren">
+      <bpmn:incoming>Flow_1xsganq</bpmn:incoming>
+      <bpmn:outgoing>Flow_1foif1h</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Activity_FaktenCheck" name="Fakten check" camunda:class="com.example.workflow.delegate.NoOpDelegate">
+      <bpmn:incoming>Flow_0brb57j</bpmn:incoming>
+      <bpmn:outgoing>Flow_0h5ew0z</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Activity_AntragBuchen" name="Antrag buchen">
+      <bpmn:incoming>Flow_11t3q7l</bpmn:incoming>
+      <bpmn:outgoing>Flow_13n16au</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Activity_MitarbeiterBenachrichtigenHR" name="Mitarbeiter benachrichtigen" camunda:class="com.example.workflow.delegate.NoOpDelegate">
+      <bpmn:incoming>Flow_13n16au</bpmn:incoming>
+      <bpmn:outgoing>Flow_03m37hr</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_UrlaubsantragGebucht" name="Urlaubsantrag gebucht">
+      <bpmn:incoming>Flow_03m37hr</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_AntragPruefen" name="Antrag prüfen">
+      <bpmn:incoming>Flow_02x709m</bpmn:incoming>
+      <bpmn:outgoing>Flow_0bqmfo2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_17hd1pt" default="Flow_11t3q7l">
+      <bpmn:incoming>Flow_0bqmfo2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1op9923</bpmn:outgoing>
+      <bpmn:outgoing>Flow_11t3q7l</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0r0209s</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_1yuje1q" default="Flow_02x709m">
+      <bpmn:incoming>Flow_0h5ew0z</bpmn:incoming>
+      <bpmn:outgoing>Flow_02x709m</bpmn:outgoing>
+      <bpmn:outgoing>Flow_03699sv</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_19tu7z4">
+      <bpmn:incoming>Flow_1op9923</bpmn:incoming>
+      <bpmn:incoming>Flow_03699sv</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xsganq</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:startEvent id="StartEvent_1" name="Urlaubsantrag stellen">
+      <bpmn:outgoing>Flow_1p0ctr5</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="Gateway_09n6k7f" default="Flow_1blpvv8">
+      <bpmn:incoming>Flow_1foif1h</bpmn:incoming>
+      <bpmn:outgoing>Flow_0i5isaj</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1blpvv8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="Event_UrlaubsantragAbgebrochen" name="Urlaubsantrag abgebrochen">
+      <bpmn:incoming>Flow_0i5isaj</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_UrlaubsantragAbgelehnt" name="Urlaubsantrag abgelehnt">
+      <bpmn:incoming>Flow_1oekyos</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_MitarbeiterBenachrichtigenVorgesetzter" name="Mitarbeiter benachrichtigen" camunda:class="com.example.workflow.delegate.NoOpDelegate">
+      <bpmn:incoming>Flow_0r0209s</bpmn:incoming>
+      <bpmn:outgoing>Flow_1oekyos</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1p0ctr5" sourceRef="StartEvent_1" targetRef="Gateway_1azi7jt" />
+    <bpmn:sequenceFlow id="Flow_0bqmfo2" sourceRef="Activity_AntragPruefen" targetRef="Gateway_17hd1pt" />
+    <bpmn:sequenceFlow id="Flow_0brb57j" sourceRef="Gateway_1azi7jt" targetRef="Activity_FaktenCheck" />
+    <bpmn:sequenceFlow id="Flow_1xsganq" sourceRef="Gateway_19tu7z4" targetRef="Activity_Korrigieren" />
+    <bpmn:sequenceFlow id="Flow_0h5ew0z" sourceRef="Activity_FaktenCheck" targetRef="Gateway_1yuje1q" />
+    <bpmn:sequenceFlow id="Flow_1op9923" name="zur Korrektur" sourceRef="Gateway_17hd1pt" targetRef="Gateway_19tu7z4">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${execution.hasVariable("korrektur") &amp;&amp; korrektur == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_11t3q7l" sourceRef="Gateway_17hd1pt" targetRef="Activity_AntragBuchen" />
+    <bpmn:sequenceFlow id="Flow_13n16au" sourceRef="Activity_AntragBuchen" targetRef="Activity_MitarbeiterBenachrichtigenHR" />
+    <bpmn:sequenceFlow id="Flow_03m37hr" sourceRef="Activity_MitarbeiterBenachrichtigenHR" targetRef="Event_UrlaubsantragGebucht" />
+    <bpmn:sequenceFlow id="Flow_02x709m" sourceRef="Gateway_1yuje1q" targetRef="Activity_AntragPruefen" />
+    <bpmn:sequenceFlow id="Flow_03699sv" name="zur Korrektur" sourceRef="Gateway_1yuje1q" targetRef="Gateway_19tu7z4">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${execution.hasVariable("korrektur") &amp;&amp; korrektur == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0i5isaj" name="aufgegeben" sourceRef="Gateway_09n6k7f" targetRef="Event_UrlaubsantragAbgebrochen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${execution.hasVariable("aufgegeben") &amp;&amp; aufgegeben == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1foif1h" sourceRef="Activity_Korrigieren" targetRef="Gateway_09n6k7f" />
+    <bpmn:sequenceFlow id="Flow_1blpvv8" sourceRef="Gateway_09n6k7f" targetRef="Gateway_1azi7jt" />
+    <bpmn:sequenceFlow id="Flow_0r0209s" sourceRef="Gateway_17hd1pt" targetRef="Activity_MitarbeiterBenachrichtigenVorgesetzter">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${execution.hasVariable("genehmigt")  &amp;&amp; genehmigt == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1oekyos" sourceRef="Activity_MitarbeiterBenachrichtigenVorgesetzter" targetRef="Event_UrlaubsantragAbgelehnt" />
+    <bpmn:textAnnotation id="TextAnnotation_1ko2uyc">
+      <bpmn:text>z.B. genug Tage noch Anspruch?</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_08qjlnh" sourceRef="Activity_FaktenCheck" targetRef="TextAnnotation_1ko2uyc" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_15yr77y">
+      <bpmndi:BPMNShape id="Participant_00cjnlv_di" bpmnElement="Participant_00cjnlv" isHorizontal="true">
+        <dc:Bounds x="160" y="52" width="840" height="848" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_02casph_di" bpmnElement="Lane_02casph" isHorizontal="true">
+        <dc:Bounds x="190" y="640" width="810" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_03m7hes_di" bpmnElement="Lane_03m7hes" isHorizontal="true">
+        <dc:Bounds x="190" y="280" width="810" height="360" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1lt3y5g_di" bpmnElement="Lane_1lt3y5g" isHorizontal="true">
+        <dc:Bounds x="190" y="52" width="810" height="228" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1oekyos_di" bpmnElement="Flow_1oekyos">
+        <di:waypoint x="820" y="550" />
+        <di:waypoint x="872" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0r0209s_di" bpmnElement="Flow_0r0209s">
+        <di:waypoint x="645" y="550" />
+        <di:waypoint x="720" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1blpvv8_di" bpmnElement="Flow_1blpvv8">
+        <di:waypoint x="770" y="165" />
+        <di:waypoint x="770" y="90" />
+        <di:waypoint x="390" y="90" />
+        <di:waypoint x="390" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1foif1h_di" bpmnElement="Flow_1foif1h">
+        <di:waypoint x="670" y="190" />
+        <di:waypoint x="745" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0i5isaj_di" bpmnElement="Flow_0i5isaj">
+        <di:waypoint x="795" y="190" />
+        <di:waypoint x="872" y="190" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="804" y="172" width="59" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03699sv_di" bpmnElement="Flow_03699sv">
+        <di:waypoint x="415" y="450" />
+        <di:waypoint x="595" y="450" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="473" y="432" width="64" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02x709m_di" bpmnElement="Flow_02x709m">
+        <di:waypoint x="390" y="475" />
+        <di:waypoint x="390" y="510" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03m37hr_di" bpmnElement="Flow_03m37hr">
+        <di:waypoint x="820" y="730" />
+        <di:waypoint x="872" y="730" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13n16au_di" bpmnElement="Flow_13n16au">
+        <di:waypoint x="670" y="730" />
+        <di:waypoint x="720" y="730" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11t3q7l_di" bpmnElement="Flow_11t3q7l">
+        <di:waypoint x="620" y="575" />
+        <di:waypoint x="620" y="690" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1op9923_di" bpmnElement="Flow_1op9923">
+        <di:waypoint x="620" y="525" />
+        <di:waypoint x="620" y="475" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="603" y="497" width="64" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h5ew0z_di" bpmnElement="Flow_0h5ew0z">
+        <di:waypoint x="390" y="400" />
+        <di:waypoint x="390" y="425" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xsganq_di" bpmnElement="Flow_1xsganq">
+        <di:waypoint x="620" y="425" />
+        <di:waypoint x="620" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0brb57j_di" bpmnElement="Flow_0brb57j">
+        <di:waypoint x="390" y="215" />
+        <di:waypoint x="390" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bqmfo2_di" bpmnElement="Flow_0bqmfo2">
+        <di:waypoint x="440" y="550" />
+        <di:waypoint x="595" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1p0ctr5_di" bpmnElement="Flow_1p0ctr5">
+        <di:waypoint x="308" y="190" />
+        <di:waypoint x="365" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Gateway_1azi7jt_di" bpmnElement="Gateway_1azi7jt" isMarkerVisible="true">
+        <dc:Bounds x="365" y="165" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0a762zt_di" bpmnElement="Activity_Korrigieren">
+        <dc:Bounds x="570" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1tqw3b4_di" bpmnElement="Activity_FaktenCheck">
+        <dc:Bounds x="340" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0q2pwlg_di" bpmnElement="Activity_AntragBuchen">
+        <dc:Bounds x="570" y="690" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0v7gt6n_di" bpmnElement="Activity_MitarbeiterBenachrichtigenHR">
+        <dc:Bounds x="720" y="690" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_15gw0ac_di" bpmnElement="Event_UrlaubsantragGebucht">
+        <dc:Bounds x="872" y="712" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="855" y="755" width="70" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hw2kb5_di" bpmnElement="Activity_AntragPruefen">
+        <dc:Bounds x="340" y="510" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_17hd1pt_di" bpmnElement="Gateway_17hd1pt" isMarkerVisible="true">
+        <dc:Bounds x="595" y="525" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1yuje1q_di" bpmnElement="Gateway_1yuje1q" isMarkerVisible="true">
+        <dc:Bounds x="365" y="425" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_19tu7z4_di" bpmnElement="Gateway_19tu7z4" isMarkerVisible="true">
+        <dc:Bounds x="595" y="425" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="272" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="255" y="134.5" width="70" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_09n6k7f_di" bpmnElement="Gateway_09n6k7f" isMarkerVisible="true">
+        <dc:Bounds x="745" y="165" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0wuogd7_di" bpmnElement="Event_UrlaubsantragAbgebrochen">
+        <dc:Bounds x="872" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="856" y="215" width="70" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_07uqr6w_di" bpmnElement="Event_UrlaubsantragAbgelehnt">
+        <dc:Bounds x="872" y="532" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="855" y="575" width="70" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13j6n0w_di" bpmnElement="Activity_MitarbeiterBenachrichtigenVorgesetzter">
+        <dc:Bounds x="720" y="510" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1ko2uyc_di" bpmnElement="TextAnnotation_1ko2uyc">
+        <dc:Bounds x="480" y="320" width="100" height="54" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_08qjlnh_di" bpmnElement="Association_08qjlnh">
+        <di:waypoint x="440" y="351" />
+        <di:waypoint x="480" y="344" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
