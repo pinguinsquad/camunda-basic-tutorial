@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Map;
+
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 @SpringBootTest
@@ -24,14 +26,18 @@ public class WorkflowUrlaubsantragTest extends AbstractProcessEngineRuleTest {
 
         // when
         ProcessInstance processInstance =
-                runtimeService.startProcessInstanceByKey(processDefinitionKey);
+                runtimeService.startProcessInstanceByKey(processDefinitionKey, Map.of("anzahlTage",1L));
 
         // then
         assertThat(processInstance)
                 .isStarted()
+                .isWaitingAt("Activity_FaktenCheck");
+        execute(job());
+
+        assertThat(processInstance)
                 .task()
                 .hasDefinitionKey("Activity_AntragPruefen")
-                .isNotAssigned();
+                .isAssignedTo("Paul");
 
         complete(task());
         assertThat(processInstance)
