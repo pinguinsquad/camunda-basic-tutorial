@@ -7,7 +7,7 @@ The example is generated using the [Camunda Platform Initializr](https://start.c
 ## Prerequisites
 
 - git
-- JDK >= 11
+- JDK >= 15
 - [maven](https://maven.apache.org) (3.x.x) or use the included [maven-wrapper](https://maven.apache.org/wrapper/) `mvnw` (keep in mind to replace `mvn` with `mvnw` on command line).
 - IDE supporting java, maven and optionally spring boot (eclipse, intellij idea, visual studio code, spring tool suite, ...)
 - [camunda Modeler](https://camunda.com/de/download/modeler/)
